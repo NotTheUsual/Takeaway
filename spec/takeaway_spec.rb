@@ -38,6 +38,10 @@ describe Takeaway do
 	end
 
 	context "(when ordering)" do
+		# before do
+		# 	Twilio::REST::Client.any_instance.stub_chain(:account,:sms,:messages,:create) {nil}
+		# end
+
 		it "should be able to place an order" do
 			takeaway.add_dish(burger)
 			expect{takeaway.place_order({burger.name => 1}, 4.99)}.not_to raise_error
@@ -50,6 +54,12 @@ describe Takeaway do
 
 		it "should raise an ArgumentError if you try to order something off menu" do
 			expect{takeaway.place_order({burger.name => 1}, 2.99)}.to raise_error(ArgumentError)
+		end
+
+		it "should send a message if the order is valid" do
+			takeaway.add_dish(burger)
+			expect(takeaway).to receive(:send_message)
+			takeaway.place_order({burger.name => 1}, 4.99)
 		end
 	end
 end
