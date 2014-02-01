@@ -25,8 +25,7 @@ class Takeaway
 	end
 
 	def total_of order
-		order.inject(0) do |total, (dish_name, quantity)|
-			dish = find_dish_by_name(dish_name)
+		order.inject(0) do |total, (dish, quantity)|
 			total += dish.price * quantity
 			total.round(2)
 		end	
@@ -83,24 +82,24 @@ class Takeaway
 		puts "(type 'done' when done)"
 		dish_name = gets.chomp
 		while dish_name != 'done'
+			begin
+				dish = find_dish_by_name(dish_name)
+			rescue ArgumentError => e
+				puts e.message
+				puts "Would you like to select another dish?"
+				puts "(type 'done' when done)"
+				dish_name = gets.chomp
+				next
+			end
 			puts "How many would you like?"
 			quantity = gets.chomp.to_i
-			order[dish_name] = quantity
-			puts "What would you like to eat?"
+			order[dish] = quantity
+			puts "Would you like to select another dish?"
 			puts "(type 'done' when done)"
 			dish_name = gets.chomp
 		end
-		begin
-			total = total_of order
-		rescue ArgumentError => e
-			puts e.message
-			puts "Would you like to start again? (y/n)"
-			choice = gets.chomp
-			take_order if choice == "y"
-			exit if choice == "n"
-		else
-			pay(order,total)
-		end
+		total = total_of order
+		pay(order,total)
 	end
 
 	def pay(order,total)
