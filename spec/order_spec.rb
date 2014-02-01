@@ -2,10 +2,8 @@ require 'order'
 
 describe Order do
 	let(:order)       { Order.new }
-	let(:burger)      { double :dish, name: "Burger", price: 4.99 }
-	let(:pizza)				{ double :dish, name: "Pizza",  price: 7.99 }
-	let(:two_burgers) { double :lineitem, dish: burger, quantity: 2, cost: 9.98 }
-	let(:one_pizza)   { double :lineitem, dish: pizza,  quantity: 1, cost: 7.99}
+	let(:two_burgers) { double :lineitem, cost: 9.98 }
+	let(:one_pizza)   { double :lineitem, cost: 7.99 }
 
 	context "(upon initialization)" do
 		it "should have a total of 0" do
