@@ -19,22 +19,21 @@ class Takeaway
 		end
 	end
 
-	def total_of order, total=0
-		order.each do |dish_name,quantity|
-			dish = find_dish_by_name(dish_name)
-			raise ArgumentError, "#{dish_name} is not on the menu" if dish.nil?
-			total += dish.price * quantity
-		end
-		total.round(2)
-	end
-
-	def find_dish_by_name dish_name
-		@dishes.find {|dish| dish.name == dish_name}
-	end
-
 	def place_order(order, payment)
 		raise "Payment is incorrect" unless payment == total_of(order)
 		send_message
+	end
+
+	def total_of order
+		order.inject(0) do |total,(dish_name, quantity)|
+			dish = find_dish_by_name(dish_name)
+			total += dish.price * quantity
+			total.round(2)
+		end	
+	end
+
+	def find_dish_by_name dish_name
+		@dishes.find(-> {raise ArgumentError, "#{dish_name} is not on the menu"}) {|dish| dish.name == dish_name}
 	end
 
 	def send_message
