@@ -5,7 +5,7 @@ class Takeaway
 
 	def initialize
 		@dishes = []
-		account_sid, auth_token = "ACccfca3b4344f0490b4f0e9ab0ac6e91e", "a16339334d03a752549b8f35eecc2c43"
+		account_sid, auth_token = "account_sid", "auth_token" # Removed because the credentials I had appear to have been deleted, so...
 		@twilio_client = Twilio::REST::Client.new account_sid, auth_token
 	end
 

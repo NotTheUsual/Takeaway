@@ -38,9 +38,9 @@ describe Takeaway do
 	end
 
 	context "(when ordering)" do
-		# before do
-		# 	Twilio::REST::Client.any_instance.stub_chain(:account,:sms,:messages,:create) {nil}
-		# end
+		before do
+			Twilio::REST::Client.any_instance.stub_chain(:account,:sms,:messages,:create) {nil}
+		end
 
 		it "should be able to place an order" do
 			takeaway.add_dish(burger)

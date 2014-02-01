@@ -1,4 +1,3 @@
 # Takeaway
 
-Will do a takeaway thing.
-It's late on Friday, I'll fix this later.
+Models a system for managing orders at takeaway restaurants.
