@@ -25,7 +25,7 @@ class Takeaway
 	end
 
 	def total_of order
-		order.inject(0) do |total,(dish_name, quantity)|
+		order.inject(0) do |total, (dish_name, quantity)|
 			dish = find_dish_by_name(dish_name)
 			total += dish.price * quantity
 			total.round(2)
@@ -33,7 +33,8 @@ class Takeaway
 	end
 
 	def find_dish_by_name dish_name
-		@dishes.find(-> {raise ArgumentError, "#{dish_name} is not on the menu"}) {|dish| dish.name == dish_name}
+		error_if_nil = -> { raise ArgumentError, "#{dish_name} is not on the menu" }
+		@dishes.find(error_if_nil) {|dish| dish.name == dish_name}
 	end
 
 	def send_message
