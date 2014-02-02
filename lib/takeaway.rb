@@ -20,15 +20,8 @@ class Takeaway
 	end
 
 	def place_order(order, payment)
-		raise "Payment is incorrect" unless payment == total_of(order)
+		raise "Payment is incorrect" unless payment == order.total
 		send_message
-	end
-
-	def total_of order
-		order.inject(0) do |total, (dish, quantity)|
-			total += dish.price * quantity
-			total.round(2)
-		end	
 	end
 
 	def find_dish_by_name dish_name

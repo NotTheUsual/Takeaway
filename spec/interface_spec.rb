@@ -236,13 +236,8 @@ describe PizzaPlace do
 			expect{pizza_place.pay_for(pizza_order)}.not_to raise_error
 		end
 
-		# it "should call the function again if payment is incorrect" do
-		# 	allow(pizza_place).to receive(:gets).and_return("8.88", "9.98")
-
-		# 	expect(pizza_place).to receive(:pay_for).once
-
-		# 	pizza_place.pay_for(pizza_order)
-		# end
+		# I wanted a test for the recursive call, but receive(:pay_for).once/twice didn't track right
+		# So, checking for the extra puts statement above does track, for now, but is a little brittle
 
 		it "should print a confirmation message before the end" do
 			allow(pizza_place).to receive(:gets).and_return("9.98")
