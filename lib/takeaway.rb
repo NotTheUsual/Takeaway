@@ -1,6 +1,9 @@
 require 'twilio-ruby'
+require_relative './interface'
 
 class Takeaway
+	include Interface
+
 	attr_reader :dishes
 
 	def initialize
@@ -20,7 +23,7 @@ class Takeaway
 	end
 
 	def place_order(order, payment)
-		raise "Payment is incorrect" unless payment == order.total
+		raise ArgumentError, "Payment is incorrect" unless payment == order.total
 		send_message
 	end
 

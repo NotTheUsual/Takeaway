@@ -1,7 +1,7 @@
-require "takeaway"
-require "dish"
-require "order"
-require "line_item"
+require "./lib/takeaway"
+require "./lib/dish"
+require "./lib/order"
+require "./lib/line_item"
 require './lib/interface'
 
 RSpec.configure do |config|

@@ -47,7 +47,7 @@ module Interface
 			ask_for_another_dish
 			dish_name = gets.chomp
 		end
-		pay order
+		pay_for order
 	end
 
 	def ask_for_another_dish
@@ -60,9 +60,11 @@ module Interface
 		payment = gets.chomp.to_f
 		begin
 			place_order(order, payment)
-		rescue
+		rescue ArgumentError
 			puts "I'm sorry, but that's not the right amount - please try again"
 			pay_for order
+		rescue
+			puts "Twilio's failed, sorry"
 		else
 			puts "Thank you for your order"
 		end

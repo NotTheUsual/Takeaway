@@ -101,9 +101,9 @@ describe PizzaPlace do
 
 	context "(taking the order)" do
 		before do
-			pizza_place.stub(:pay) 							  { nil }
 			allow(pizza_place).to receive(:find_dish_by_name).with("Pizza").and_return(pizza)
 			allow(pizza_place).to receive(:find_dish_by_name).with("Chips").and_raise(ArgumentError, "message")
+			allow(pizza_place).to receive(:pay_for).and_return(nil)
 		end
 
 		it "should create a new order object" do
@@ -133,7 +133,7 @@ describe PizzaPlace do
 		it "should be able to break out of the loop after none-done input" do
 			allow(pizza_place).to receive(:gets).and_return("Pizza\n", "done\n")
 		
-			expect(pizza_place).to receive(:pay)
+			expect(pizza_place).to receive(:pay_for)
 
 			pizza_place.take_order
 		end
@@ -198,7 +198,7 @@ describe PizzaPlace do
 	context "(attempting to pay)" do
 		before do
 			allow(pizza_place).to receive(:place_order).with(pizza_order,9.98).and_return(nil)
-			allow(pizza_place).to receive(:place_order).with(pizza_order,8.88).and_raise("message")
+			allow(pizza_place).to receive(:place_order).with(pizza_order,8.88).and_raise(ArgumentError, "message")
 		end
 
 		it "should ask you to pay the correct total" do
